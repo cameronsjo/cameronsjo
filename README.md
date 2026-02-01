@@ -3,15 +3,8 @@
 Principal AI Security Engineer at Walmart. I build secure-by-design AI systems at scale.
 
 <p>
-  <img height="170" src="https://github-readme-stats.vercel.app/api?username=cameronsjo&show_icons=true&theme=tokyonight&hide_border=true&count_private=true" alt="GitHub Stats" />
-  <img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=cameronsjo&layout=compact&theme=tokyonight&hide_border=true" alt="Top Languages" />
-</p>
-
-<p>
   <img src="https://streak-stats.demolab.com/?user=cameronsjo&theme=tokyonight&hide_border=true" alt="GitHub Streak" />
 </p>
-
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=cameronsjo&theme=tokyo-night&hide_border=true&area=true" alt="Activity Graph" />
 
 **Tech Stack**
 
