@@ -1,6 +1,6 @@
 ### Hey, I'm Cameron
 
-Principal AI Security Engineer at Walmart. I build secure-by-design AI systems at scale.
+Principal AI Security Engineer at a major US retailer. I build secure-by-design AI systems at scale.
 
 <p>
   <img src="https://streak-stats.demolab.com/?user=cameronsjo&theme=tokyonight&hide_border=true" alt="GitHub Streak" />
