@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="200" viewBox="0 0 640 200" role="img" aria-label="GitHub stats for cameronsjo">
+  <!--
+    Artificer v0.12 dark stats card — baseline template.
+    Placeholders ({{...}}) are string-substituted by scripts/generate-profile.mjs.
+    Visual polish is iterated via the design-system handoff; placeholders stay stable.
+    No <script>, no external refs — GitHub's camo <img> proxy strips them.
+    Font: monospace stack (a base64 JetBrains Mono subset is embedded in the design pass).
+  -->
+  <style>
+    .mono  { font-family: ui-monospace, "JetBrains Mono", "SFMono-Regular", Menlo, monospace; }
+    .num   { font-variant-numeric: tabular-nums; }
+    .wordmark { fill: #b095e0; font-size: 15px; font-weight: 600; letter-spacing: 0.5px; }
+    .hero     { fill: #dbbb6f; font-size: 54px; font-weight: 700; }
+    .hero-label { fill: #c5c8c6; font-size: 13px; }
+    .stat-num   { fill: #b8cad4; font-size: 20px; font-weight: 600; }
+    .stat-label { fill: #c5c8c6; font-size: 12px; }
+    .footer     { fill: #c5c8c6; font-size: 11px; }
+  </style>
+
+  <!-- Card surface -->
+  <rect x="0.5" y="0.5" width="639" height="199" rx="8" fill="#292c33" stroke="#4a4f5c" stroke-width="1"/>
+
+  <!-- Wordmark -->
+  <text x="24" y="38" class="mono wordmark">cameronsjo</text>
+
+  <!-- Inner raised panel behind the hero stat -->
+  <rect x="24" y="56" width="280" height="112" rx="8" fill="#313540"/>
+
+  <!-- Hero: current streak. Success dot sits on the label as an "active" marker. -->
+  <text x="44" y="132" class="mono hero num">29</text>
+  <circle cx="49" cy="151.5" r="4" fill="#4a8a5e"/>
+  <text x="62" y="156" class="mono hero-label">day current streak</text>
+
+  <!-- Supporting stats (steel) -->
+  <g transform="translate(340, 0)">
+    <text x="0" y="72" class="mono stat-num num">29</text>
+    <text x="0" y="90" class="mono stat-label">longest streak</text>
+
+    <text x="0" y="124" class="mono stat-num num">5464</text>
+    <text x="0" y="142" class="mono stat-label">contributions (year)</text>
+
+    <text x="150" y="72" class="mono stat-num num">46</text>
+    <text x="150" y="90" class="mono stat-label">public repos</text>
+
+    <text x="150" y="124" class="mono stat-num num">63 ★</text>
+    <text x="150" y="142" class="mono stat-label">total stars</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="24" y="186" class="mono footer">updated 2026-06-06 · regenerated weekly</text>
+</svg>

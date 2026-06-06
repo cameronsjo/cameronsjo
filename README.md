@@ -3,7 +3,7 @@
 Principal AI Security Engineer at a major US retailer. I build secure-by-design AI systems at scale.
 
 <p>
-  <img src="https://streak-stats.demolab.com/?user=cameronsjo&theme=tokyonight&hide_border=true" alt="GitHub Streak" />
+  <img src="./assets/stats.svg" alt="GitHub stats — updated weekly" />
 </p>
 
 **Tech Stack**
@@ -24,9 +24,15 @@ Principal AI Security Engineer at a major US retailer. I build secure-by-design 
 - GitOps tooling for home labs and bare metal
 - Obsidian integrations and PKM automation
 
-**Recent work:**
-- [mcp-server-template](https://github.com/cameronsjo/mcp-server-template) — Production MCP server with OAuth 2.1 & Zero Trust
-- [bosun](https://github.com/cameronsjo/bosun) — GitOps for Docker Compose
-- [spec-compare](https://github.com/cameronsjo/spec-compare) — SDD tools research
+**Pinned:**
+<!-- PINS:START -->
+<!-- generated weekly — do not edit by hand -->
+- [spec-compare](https://github.com/cameronsjo/spec-compare) — Research comparing 6 spec-driven development tools (Spec-Kit, Spec Kitty, BMad, OpenSpec, Kiro, Tessl) with git worktree analysis and decision frameworks ★ 43
+- [bosun](https://github.com/cameronsjo/bosun) — GitOps for Docker Compose on bare metal
+- [obsidi-claude](https://github.com/cameronsjo/obsidi-claude) — Obsidian plugin for chatting with Claude using the Agent SDK
+- [workbench](https://github.com/cameronsjo/workbench) ★ 4
+- [dev-encyclopedia](https://github.com/cameronsjo/dev-encyclopedia) — Developer's Encyclopedia - Obsidian vault covering languages, frameworks, tools, CS, math, and ML
+- [llm-council](https://github.com/cameronsjo/llm-council) — LLM Council works together to answer your hardest questions
+<!-- PINS:END -->
 
 I learn by building. You won't see me in your feed much, but you'll see the repos.
