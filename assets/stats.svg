@@ -9,13 +9,45 @@
   <style>
     .mono  { font-family: ui-monospace, "JetBrains Mono", "SFMono-Regular", Menlo, monospace; }
     .num   { font-variant-numeric: tabular-nums; }
-    .wordmark { fill: #b095e0; font-size: 15px; font-weight: 600; letter-spacing: 0.5px; }
+
+    /* Whimsy — the one sanctioned exception (Artificer v0.10 .whimsy--brand).
+       Real semantic tokens in motion: gold → rose → purple → steel → green.
+       CSS-only port: JS is stripped from GitHub-proxied img SVGs, so the flow
+       lives in @keyframes on the gradient stops. Reduced-motion freezes it to a
+       static burnished gradient — non-negotiable #7, honored without scripts. */
+    .wstop { animation: whimsy-cycle 7s linear infinite; }
+    @keyframes whimsy-cycle {
+      0%   { stop-color: #dbbb6f; } /* gold   */
+      20%  { stop-color: #c4808a; } /* rose   */
+      40%  { stop-color: #b095e0; } /* purple */
+      60%  { stop-color: #b8cad4; } /* steel  */
+      80%  { stop-color: #6aa67d; } /* green  */
+      100% { stop-color: #dbbb6f; } /* → gold */
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .wstop { animation: none; }
+    }
+
+    .wordmark { fill: url(#whimsy); font-size: 15px; font-weight: 700; letter-spacing: 0.5px; }
     .hero     { fill: #dbbb6f; font-size: 54px; font-weight: 700; }
     .hero-label { fill: #c5c8c6; font-size: 13px; }
     .stat-num   { fill: #b8cad4; font-size: 20px; font-weight: 600; }
     .stat-label { fill: #c5c8c6; font-size: 12px; }
     .footer     { fill: #c5c8c6; font-size: 11px; }
   </style>
+
+  <defs>
+    <!-- Whimsy gradient clipped to the wordmark glyphs. Static stop-colors give
+         the reduced-motion fallback; negative animation-delays phase-shift the
+         five stops so the cycling reads as a flowing sweep, not a uniform pulse. -->
+    <linearGradient id="whimsy" x1="0" y1="0" x2="1" y2="0">
+      <stop class="wstop" offset="0%"   stop-color="#dbbb6f" style="animation-delay: 0s"/>
+      <stop class="wstop" offset="25%"  stop-color="#b095e0" style="animation-delay: -1.4s"/>
+      <stop class="wstop" offset="50%"  stop-color="#b8cad4" style="animation-delay: -2.8s"/>
+      <stop class="wstop" offset="75%"  stop-color="#6aa67d" style="animation-delay: -4.2s"/>
+      <stop class="wstop" offset="100%" stop-color="#dbbb6f" style="animation-delay: -5.6s"/>
+    </linearGradient>
+  </defs>
 
   <!-- Card surface -->
   <rect x="0.5" y="0.5" width="639" height="199" rx="8" fill="#292c33" stroke="#4a4f5c" stroke-width="1"/>
