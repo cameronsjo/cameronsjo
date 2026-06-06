@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 jobs:
   refresh:
@@ -19,6 +20,7 @@ jobs:
           node-version: "20"
 
       - name: Generate stats card and pins
+        id: gen
         env:
           STATS_TOKEN: ${{ secrets.STATS_TOKEN }}
           GITHUB_TOKEN: ${{ github.token }}
@@ -35,3 +37,25 @@ jobs:
             git commit -m "chore: refresh profile stats and pins [skip-ci]"
             git push
           fi
+
+      # Reminder: open an issue when STATS_TOKEN is within 14 days of expiry.
+      # Skipped when running on the GITHUB_TOKEN fallback (no expiry emitted).
+      - name: Remind before token expiry
+        if: ${{ steps.gen.outputs.token_expiry_days != '' && fromJSON(steps.gen.outputs.token_expiry_days) <= 14 }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DAYS: ${{ steps.gen.outputs.token_expiry_days }}
+          EXP: ${{ steps.gen.outputs.token_expiry_at }}
+        run: |
+          title="STATS_TOKEN expires soon — rotate it"
+          existing=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
+            --search "$title in:title" --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            echo "Reminder issue #$existing already open — leaving it."
+            exit 0
+          fi
+          body=$(printf '%s\n\n%s\n\n%s' \
+            "\`STATS_TOKEN\` expires in **${DAYS} days** (on ${EXP})." \
+            "Rotate it: \`./scripts/setup-stats-token.sh\` (or regenerate the PAT and run \`gh secret set STATS_TOKEN\`)." \
+            "Until it lapses the weekly refresh keeps working; once expired, contributions fall back to public-only and this job starts failing. Close this issue after rotating.")
+          gh issue create --repo "$GITHUB_REPOSITORY" --title "$title" --body "$body"

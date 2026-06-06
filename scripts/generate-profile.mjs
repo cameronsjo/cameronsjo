@@ -11,6 +11,7 @@
 // (public-only contributions) if STATS_TOKEN is absent.
 
 import { readFile, writeFile } from "node:fs/promises";
+import { appendFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -19,6 +20,11 @@ const ROOT = join(__dirname, "..");
 
 const LOGIN = process.env.PROFILE_LOGIN || "cameronsjo";
 const TOKEN = process.env.STATS_TOKEN || process.env.GITHUB_TOKEN;
+const USING_PAT = Boolean(process.env.STATS_TOKEN);
+
+// GitHub returns the PAT's expiration in a response header; captured per-call so
+// the workflow can warn before it lapses. (GITHUB_TOKEN's ~1h expiry is ignored.)
+let tokenExpiry = null;
 
 if (!TOKEN) {
   console.error(
@@ -39,6 +45,8 @@ async function gql(query, variables) {
     },
     body: JSON.stringify({ query, variables }),
   });
+  const exp = res.headers.get("github-authentication-token-expiration");
+  if (exp) tokenExpiry = exp;
   if (!res.ok) {
     throw new Error(`GraphQL HTTP ${res.status}: ${await res.text()}`);
   }
@@ -149,6 +157,49 @@ function computeStreaks(calendar) {
   return { current, longest };
 }
 
+// ── "Days since last vacation" ───────────────────────────────────────────────
+// The deadpan inverse of the workshop "days since last accident" sign. A
+// "vacation" is a real break, not a quiet day: >= 3 consecutive zero-contribution
+// days (the daily calendar's stand-in for ">= 72h of no activity"). The stat is
+// the number of days since the most recent such break ended.
+
+const VACATION_MIN_DAYS = 3;
+
+function daysSinceLastVacation(calendar) {
+  const days = calendar.weeks
+    .flatMap((w) => w.contributionDays)
+    .sort((a, b) => a.date.localeCompare(b.date));
+  if (days.length === 0) return { days: 0 };
+
+  // Scan backwards for the end (most recent day) of a zero-run >= VACATION_MIN_DAYS.
+  let endIdx = -1;
+  let i = days.length - 1;
+  while (i >= 0) {
+    if (days[i].contributionCount === 0) {
+      let j = i;
+      while (j >= 0 && days[j].contributionCount === 0) j -= 1;
+      if (i - j >= VACATION_MIN_DAYS) {
+        endIdx = i;
+        break;
+      }
+      i = j; // skip this too-short run and keep looking earlier
+    } else {
+      i -= 1;
+    }
+  }
+
+  // No qualifying break in the window — they haven't taken 3 days off all year.
+  if (endIdx === -1) return { days: days.length, none: true };
+
+  // The break runs to today → currently on vacation.
+  if (endIdx === days.length - 1) return { days: 0, onVacation: true };
+
+  const ms = 86400000;
+  const end = new Date(`${days[endIdx].date}T00:00:00Z`);
+  const today = new Date(`${days[days.length - 1].date}T00:00:00Z`);
+  return { days: Math.round((today - end) / ms) };
+}
+
 // ── SVG render ──────────────────────────────────────────────────────────────
 
 function renderSvg(template, values) {
@@ -198,11 +249,13 @@ async function main() {
 
   const calendar = profile.user.contributionsCollection.contributionCalendar;
   const { current, longest } = computeStreaks(calendar);
+  const vacation = daysSinceLastVacation(calendar);
   const pins = profile.user.pinnedItems.nodes.filter(Boolean);
 
   const updated = new Date().toISOString().slice(0, 10);
 
   const values = {
+    DAYS_SINCE_VACATION: vacation.days,
     CURRENT_STREAK: current,
     LONGEST_STREAK: longest,
     TOTAL_CONTRIB: calendar.totalContributions,
@@ -223,6 +276,24 @@ async function main() {
   await writeFile(readmePath, rewritePins(readme, pins));
 
   console.log("Wrote assets/stats.svg and updated README pins block.");
+
+  // Token-expiry reminder: only meaningful for a real PAT (the GITHUB_TOKEN
+  // fallback expires hourly). Surface days-remaining so the workflow can warn.
+  if (USING_PAT && tokenExpiry) {
+    const m = tokenExpiry.match(/\d{4}-\d{2}-\d{2}/);
+    if (m) {
+      const daysLeft = Math.round(
+        (new Date(`${m[0]}T00:00:00Z`) - new Date(`${updated}T00:00:00Z`)) / 86400000,
+      );
+      console.log(`STATS_TOKEN expires in ${daysLeft} days (${m[0]}).`);
+      if (process.env.GITHUB_OUTPUT) {
+        appendFileSync(
+          process.env.GITHUB_OUTPUT,
+          `token_expiry_days=${daysLeft}\ntoken_expiry_at=${m[0]}\n`,
+        );
+      }
+    }
+  }
 }
 
 main().catch((err) => {
