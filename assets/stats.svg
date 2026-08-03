@@ -61,25 +61,25 @@
   <!-- Hero: days since last vacation — the deadpan inverse of the "days since
        last accident" sign. A vacation = >= 3 consecutive zero-contribution days.
        Success dot reads as "currently at the bench" (not on vacation). -->
-  <text x="44" y="132" class="mono hero num">98</text>
+  <text x="44" y="132" class="mono hero num">105</text>
   <circle cx="49" cy="151.5" r="4" fill="#4a8a5e"/>
   <text x="62" y="156" class="mono hero-label">days since last vacation</text>
 
   <!-- Supporting stats (steel) -->
   <g transform="translate(340, 0)">
-    <text x="0" y="72" class="mono stat-num num">66</text>
+    <text x="0" y="72" class="mono stat-num num">73</text>
     <text x="0" y="90" class="mono stat-label">current streak</text>
 
-    <text x="0" y="124" class="mono stat-num num">10185</text>
+    <text x="0" y="124" class="mono stat-num num">11236</text>
     <text x="0" y="142" class="mono stat-label">contributions (year)</text>
 
-    <text x="150" y="72" class="mono stat-num num">47</text>
+    <text x="150" y="72" class="mono stat-num num">46</text>
     <text x="150" y="90" class="mono stat-label">public repos</text>
 
-    <text x="150" y="124" class="mono stat-num num">124 ★</text>
+    <text x="150" y="124" class="mono stat-num num">130 ★</text>
     <text x="150" y="142" class="mono stat-label">total stars</text>
   </g>
 
   <!-- Footer -->
-  <text x="24" y="186" class="mono footer">updated 2026-07-27 · regenerated weekly</text>
+  <text x="24" y="186" class="mono footer">updated 2026-08-03 · regenerated weekly</text>
 </svg>
