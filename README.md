@@ -27,10 +27,10 @@ Principal AI Security Engineer at a major US retailer. I build secure-by-design 
 **Pinned:**
 <!-- PINS:START -->
 <!-- generated weekly — do not edit by hand -->
-- [spec-compare](https://github.com/cameronsjo/spec-compare) — Research comparing 6 spec-driven development tools (Spec-Kit, Spec Kitty, BMad, OpenSpec, Kiro, Tessl) with git worktree analysis and decision frameworks ★ 101
+- [spec-compare](https://github.com/cameronsjo/spec-compare) — Research comparing 6 spec-driven development tools (Spec-Kit, Spec Kitty, BMad, OpenSpec, Kiro, Tessl) with git worktree analysis and decision frameworks ★ 111
 - [bosun](https://github.com/cameronsjo/bosun) — GitOps for Docker Compose on bare metal ★ 1
 - [cadence-hooks](https://github.com/cameronsjo/cadence-hooks) — Compiled Claude Code hooks — single binary for cadence, git-guardrails, rules, and obsidian plugins ★ 3
-- [artificer](https://github.com/cameronsjo/artificer) — Artificer — Cameron's AuDHD-friendly, dark-first design system for tools, dashboards, and terminals. MIT, Cameron-first. ★ 1
+- [artificer](https://github.com/cameronsjo/artificer) — Artificer — Cameron's AuDHD-friendly, dark-first design system for tools, dashboards, and terminals. MIT, Cameron-first. ★ 2
 - [agent-pool](https://github.com/cameronsjo/agent-pool) — Process supervisor managing headless Claude Code expert sessions with mixture-of-experts routing, externalized state, and filesystem-based coordination
 <!-- PINS:END -->
 
