@@ -11,6 +11,8 @@ Principal AI Security Engineer at a major US retailer. I build secure-by-design 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
+![Rust](https://img.shields.io/badge/Rust-000000?style=flat&logo=rust&logoColor=white)
+![Go](https://img.shields.io/badge/Go-00ADD8?style=flat&logo=go&logoColor=white)
 ![C#](https://img.shields.io/badge/C%23-512BD4?style=flat&logo=dotnet&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=flat&logo=kubernetes&logoColor=white)
@@ -20,6 +22,8 @@ Principal AI Security Engineer at a major US retailer. I build secure-by-design 
 ![Obsidian](https://img.shields.io/badge/Obsidian-7C3AED?style=flat&logo=obsidian&logoColor=white)
 
 **Currently building:**
+- Source-grounded research on AI coding tools and how their agent loops actually work
+- Claude Code extensions — compiled hooks and a plugin ecosystem
 - MCP servers and agent infrastructure
 - GitOps tooling for home labs and bare metal
 - Obsidian integrations and PKM automation
