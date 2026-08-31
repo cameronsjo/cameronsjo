@@ -31,7 +31,7 @@ Principal AI Security Engineer at a major US retailer. I build secure-by-design 
 **Pinned:**
 <!-- PINS:START -->
 <!-- generated weekly — do not edit by hand -->
-- [spec-compare](https://github.com/cameronsjo/spec-compare) — Interactive comparison of the spec-driven development tools — lockstep workflow walkthroughs, a scoring heatmap across use cases, and a decision guide, live at cameronsjo.github.io/spec-compare ★ 122
+- [spec-compare](https://github.com/cameronsjo/spec-compare) — Interactive comparison of the spec-driven development tools — lockstep workflow walkthroughs, a scoring heatmap across use cases, and a decision guide, live at cameronsjo.github.io/spec-compare ★ 131
 - [agentic-harnesses](https://github.com/cameronsjo/agentic-harnesses) — Source-grounded comparison of the agentic coding harnesses and how each runs its agent loop, with an interactive visualizer live at cameronsjo.github.io/agentic-harnesses ★ 1
 - [artificer](https://github.com/cameronsjo/artificer) — Cameron's dark-first, AuDHD-friendly design system — one stylesheet carries every token and component class, with a compiled React adapter shipping the whole app shell ★ 2
 - [cadence-hooks](https://github.com/cameronsjo/cadence-hooks) — Claude Code hooks compiled into a single Rust binary — sub-millisecond cold starts and zero runtime dependencies, replacing a pile of shell and Node scripts ★ 3
