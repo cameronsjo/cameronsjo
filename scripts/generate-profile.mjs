@@ -203,10 +203,50 @@ function daysSinceLastVacation(calendar) {
 
 // ── SVG render ──────────────────────────────────────────────────────────────
 
+// 19141 → "19.1K", 1200000 → "1.2M"; below 10k keeps every digit.
+const COMPACT = new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 });
+
+function formatCompact(n) {
+  return n < 10000 ? n.toLocaleString("en-US") : COMPACT.format(n);
+}
+
+// One bar per calendar week. Heights use a square-root scale so quiet weeks
+// stay visible next to a busy peak; the chart has no axis, so it shows shape,
+// not exact values.
+const BARS_WIDTH = 592;
+const BARS_HEIGHT = 32;
+const BARS_GAP = 2;
+const BARS_STAGGER_MS = 12;
+
+function renderWeekBars(calendar) {
+  const totals = calendar.weeks.map((w) =>
+    w.contributionDays.reduce((sum, d) => sum + d.contributionCount, 0),
+  );
+  const max = Math.max(1, ...totals);
+  const step = BARS_WIDTH / totals.length;
+  const width = (step - BARS_GAP).toFixed(2);
+  return totals
+    .map((count, i) => {
+      const h = Math.max(1.5, Math.sqrt(count / max) * BARS_HEIGHT);
+      const cls = i === totals.length - 1 ? "bar bar-now" : "bar";
+      return `<rect class="${cls}" x="${(i * step).toFixed(2)}" y="${(BARS_HEIGHT - h).toFixed(2)}" width="${width}" height="${h.toFixed(2)}" rx="1" style="animation-delay: ${i * BARS_STAGGER_MS}ms"/>`;
+    })
+    .join("\n    ");
+}
+
+// Placeholders whose value is generated markup. Every other value is
+// XML-escaped, so a string with <, & or " cannot break the SVG.
+const RAW_PLACEHOLDERS = new Set(["WEEK_BARS"]);
+
+function escapeXml(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
 function renderSvg(template, values) {
   return template.replace(/\{\{(\w+)\}\}/g, (match, key) => {
-    if (key in values) return String(values[key]);
-    return match; // leave unknown placeholders intact
+    if (!(key in values)) return match; // leave unknown placeholders intact
+    const v = String(values[key]);
+    return RAW_PLACEHOLDERS.has(key) ? v : escapeXml(v);
   });
 }
 
@@ -260,12 +300,15 @@ async function main() {
     CURRENT_STREAK: current,
     LONGEST_STREAK: longest,
     TOTAL_CONTRIB: calendar.totalContributions,
+    TOTAL_CONTRIB_SHORT: formatCompact(calendar.totalContributions),
     PUBLIC_REPOS: repoTotals.publicRepos,
     TOTAL_STARS: repoTotals.totalStars,
     UPDATED: updated,
+    WEEK_BARS: renderWeekBars(calendar),
   };
 
-  console.log("Stats:", JSON.stringify(values));
+  const { WEEK_BARS, ...stats } = values;
+  console.log("Stats:", JSON.stringify(stats));
   console.log("Pins:", pins.map((p) => p.name).join(", "));
 
   const template = await readFile(join(ROOT, "assets/stats.template.svg"), "utf8");

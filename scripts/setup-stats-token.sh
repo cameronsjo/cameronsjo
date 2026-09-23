@@ -2,16 +2,16 @@
 # setup-stats-token.sh — one-shot setup for the STATS_TOKEN secret the weekly
 # profile workflow uses. GitHub has no API to mint a classic PAT, so the token
 # itself must be created in the browser — but this script pre-opens the creation
-# page with the right scopes ticked, then handles the secret set for you.
+# token page, then handles the secret set for you.
 #
 # Usage:  ./scripts/setup-stats-token.sh
 set -euo pipefail
 
 REPO="cameronsjo/cameronsjo"
 SECRET="STATS_TOKEN"
-# Pre-ticks `repo` (lets private contributions count toward the streak) +
-# `read:user`. Classic-token creation page; scopes arrive pre-selected.
-TOKEN_URL="https://github.com/settings/tokens/new?scopes=repo,read:user&description=${REPO//\//-}-${SECRET}"
+# No scopes: every query reads public data. Private contributions still count
+# through the profile's "Include private contributions" setting.
+TOKEN_URL="https://github.com/settings/tokens/new?description=${REPO//\//-}-${SECRET}"
 
 die() { printf '\033[1;31m✗ %s\033[0m\n' "$*" >&2; exit 1; }
 ok()  { printf '\033[1;32m✓ %s\033[0m\n' "$*"; }
@@ -27,8 +27,8 @@ fi
 
 # ── Open the token page ─────────────────────────────────────────────────────
 printf '\n\033[1;34m━━ Create the token ━━\033[0m\n'
-echo "Opening the GitHub token page with 'repo' + 'read:user' pre-selected."
-echo "Set an expiry you like, scroll down, click 'Generate token', then copy it."
+echo "Opening the GitHub token page. Leave every scope box unchecked."
+echo "Set Expiration to 'No expiration', scroll down, click 'Generate token', then copy it."
 echo
 echo "  $TOKEN_URL"
 echo
