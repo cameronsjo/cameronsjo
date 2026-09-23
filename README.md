@@ -3,7 +3,10 @@
 Principal AI Security Engineer at a major US retailer. I build secure-by-design AI systems at scale.
 
 <p>
-  <img src="./assets/stats.svg" alt="GitHub stats — updated weekly" />
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="./assets/stats-light.svg" />
+    <img src="./assets/stats.svg" alt="GitHub stats — updated weekly" />
+  </picture>
 </p>
 
 **Tech Stack**

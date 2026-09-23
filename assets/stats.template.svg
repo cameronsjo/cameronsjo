@@ -1,6 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="244" viewBox="0 0 640 244" role="img" aria-label="GitHub stats for cameronsjo: {{DAYS_SINCE_VACATION}} days since last vacation, {{CURRENT_STREAK}}-day streak, {{TOTAL_CONTRIB}} contributions in the past year, {{PUBLIC_REPOS}} public repos, {{TOTAL_STARS}} stars">
   <!--
-    Artificer v0.26 dark stats card.
+    Artificer v0.26 stats card, written in the dark palette. The generator
+    derives assets/stats-light.svg by mapping each hex (LIGHT_THEME), so every
+    color added here needs a light value there.
     Placeholders ({{...}}) are string-substituted by scripts/generate-profile.mjs.
     No <script>, no external refs — GitHub's camo <img> proxy strips them.
     Motion is CSS-only and collapses to the static state under reduced motion.

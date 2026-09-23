@@ -3,7 +3,8 @@
 //
 // Zero dependencies: uses built-in fetch (Node 20+). Queries the GitHub GraphQL
 // API for contribution calendar, repo totals, and pinned items; computes streak
-// math locally; renders assets/stats.svg from assets/stats.template.svg; and
+// math locally; renders assets/stats.svg (dark) and assets/stats-light.svg from
+// assets/stats.template.svg; and
 // rewrites the README's pinned-repo block between PINS markers.
 //
 // Auth: STATS_TOKEN is a classic PAT with no scopes and no expiration. Every
@@ -252,6 +253,40 @@ async function renderFontFaces() {
   return faces.join("\n    ");
 }
 
+// The template is written in Artificer's dark palette. The light copy (paper
+// stock) swaps each dark hex for its light-theme token; README's <picture>
+// picks one per the viewer's GitHub theme. Every template hex must be mapped,
+// so a new color fails the run instead of staying dark on ivory.
+const LIGHT_THEME = new Map([
+  ["#292c33", "#f5ead0"], // --bg
+  ["#313540", "#eddcc0"], // --bg-raised
+  ["#4a4f5c", "#cbb88a"], // --border
+  ["#c5c8c6", "#4a3f2a"], // --fg-secondary
+  ["#b8cad4", "#2e4a5a"], // --steel
+  ["#5a7a8a", "#5a7a8a"], // --steel-fill (bars): same in both themes, 3.84:1 on ivory (graphics floor 3:1)
+  ["#dbbb6f", "#7a5a10"], // --accent
+  ["#e3c885", "#866010"], // --accent-bright (hero gradient top)
+  ["#c4932a", "#7a5a10"], // --accent-fill → --accent (hero gradient base; fill gold is too light on ivory)
+  ["#c4808a", "#7a5a10"], // whimsy rose stop → --accent; light --attention (#8a6618) is 4.40:1, under AA for the 15px wordmark
+  ["#b095e0", "#5a35b0"], // --brand-purple-bright (whimsy)
+  ["#6aa67d", "#2a5a3a"], // --success (whimsy green stop)
+  ["#4a8a5e", "#2a5a3a"], // --success (status dot)
+]);
+
+// Any #rgb … #rrggbbaa form, so a shorthand or alpha hex fails the check
+// instead of slipping past a six-digit-only pattern and staying dark.
+const HEX = /#[0-9a-fA-F]{3,8}\b/g;
+
+function toLightTheme(svg) {
+  const unmapped = [...new Set(svg.match(HEX) ?? [])].filter(
+    (h) => !LIGHT_THEME.has(h.toLowerCase()),
+  );
+  if (unmapped.length) {
+    throw new Error(`LIGHT_THEME has no light value for color(s): ${unmapped.join(", ")}`);
+  }
+  return svg.replace(HEX, (h) => LIGHT_THEME.get(h.toLowerCase()));
+}
+
 // Placeholders whose value is generated markup. Every other value is
 // XML-escaped, so a string with <, & or " cannot break the SVG.
 const RAW_PLACEHOLDERS = new Set(["WEEK_BARS", "FONT_FACES"]);
@@ -332,13 +367,15 @@ async function main() {
 
   const template = await readFile(join(ROOT, "assets/stats.template.svg"), "utf8");
   const svg = renderSvg(template, values);
+  const lightSvg = toLightTheme(svg); // throws before any write on an unmapped color
   await writeFile(join(ROOT, "assets/stats.svg"), svg);
+  await writeFile(join(ROOT, "assets/stats-light.svg"), lightSvg);
 
   const readmePath = join(ROOT, "README.md");
   const readme = await readFile(readmePath, "utf8");
   await writeFile(readmePath, rewritePins(readme, pins));
 
-  console.log("Wrote assets/stats.svg and updated README pins block.");
+  console.log("Wrote assets/stats.svg, assets/stats-light.svg, and updated README pins block.");
 
   // Token-expiry reminder: only meaningful for a real PAT (the GITHUB_TOKEN
   // fallback expires hourly). Surface days-remaining so the workflow can warn.
