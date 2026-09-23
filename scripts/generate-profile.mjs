@@ -234,9 +234,27 @@ function renderWeekBars(calendar) {
     .join("\n    ");
 }
 
+// JetBrains Mono subsets (ASCII + middle dot, OFL — see assets/fonts/OFL.txt),
+// inlined as data URIs: GitHub's camo <img> proxy blocks external font URLs.
+// Regenerate a subset with:
+//   uvx --from 'fonttools[woff]' pyftsubset JetBrainsMono-Bold.ttf \
+//     --unicodes='U+0020-007E,U+00B7' --flavor=woff2 --layout-features='' \
+//     --no-hinting --desubroutinize --output-file=assets/fonts/jetbrains-mono-700.woff2
+const FONT_WEIGHTS = [400, 600, 700];
+
+async function renderFontFaces() {
+  const faces = await Promise.all(
+    FONT_WEIGHTS.map(async (weight) => {
+      const data = await readFile(join(ROOT, `assets/fonts/jetbrains-mono-${weight}.woff2`));
+      return `@font-face { font-family: "JetBrains Mono"; font-weight: ${weight}; src: url(data:font/woff2;base64,${data.toString("base64")}) format("woff2"); }`;
+    }),
+  );
+  return faces.join("\n    ");
+}
+
 // Placeholders whose value is generated markup. Every other value is
 // XML-escaped, so a string with <, & or " cannot break the SVG.
-const RAW_PLACEHOLDERS = new Set(["WEEK_BARS"]);
+const RAW_PLACEHOLDERS = new Set(["WEEK_BARS", "FONT_FACES"]);
 
 function escapeXml(s) {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -305,9 +323,10 @@ async function main() {
     TOTAL_STARS: repoTotals.totalStars,
     UPDATED: updated,
     WEEK_BARS: renderWeekBars(calendar),
+    FONT_FACES: await renderFontFaces(),
   };
 
-  const { WEEK_BARS, ...stats } = values;
+  const { WEEK_BARS, FONT_FACES, ...stats } = values;
   console.log("Stats:", JSON.stringify(stats));
   console.log("Pins:", pins.map((p) => p.name).join(", "));
 
