@@ -1,20 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="200" viewBox="0 0 640 200" role="img" aria-label="GitHub stats for cameronsjo">
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="244" viewBox="0 0 640 244" role="img" aria-label="GitHub stats for cameronsjo: 155 days since last vacation, 8-day streak, 19160 contributions in the past year, 47 public repos, 179 stars">
   <!--
-    Artificer v0.12 dark stats card — baseline template.
+    Artificer v0.26 dark stats card.
     Placeholders ({{...}}) are string-substituted by scripts/generate-profile.mjs.
-    Visual polish is iterated via the design-system handoff; placeholders stay stable.
     No <script>, no external refs — GitHub's camo <img> proxy strips them.
-    Font: monospace stack (a base64 JetBrains Mono subset is embedded in the design pass).
+    Motion is CSS-only and collapses to the static state under reduced motion.
   -->
   <style>
     .mono  { font-family: ui-monospace, "JetBrains Mono", "SFMono-Regular", Menlo, monospace; }
     .num   { font-variant-numeric: tabular-nums; }
 
-    /* Whimsy — the one sanctioned exception (Artificer v0.10 .whimsy--brand).
-       Real semantic tokens in motion: gold → rose → purple → steel → green.
-       CSS-only port: JS is stripped from GitHub-proxied img SVGs, so the flow
-       lives in @keyframes on the gradient stops. Reduced-motion freezes it to a
-       static burnished gradient — non-negotiable #7, honored without scripts. */
+    /* Whimsy — the one sanctioned exception (Artificer .whimsy--brand).
+       Real semantic tokens in motion: gold → rose → purple → steel → green. */
     .wstop { animation: whimsy-cycle 7s linear infinite; }
     @keyframes whimsy-cycle {
       0%   { stop-color: #dbbb6f; } /* gold   */
@@ -24,22 +20,33 @@
       80%  { stop-color: #6aa67d; } /* green  */
       100% { stop-color: #dbbb6f; } /* → gold */
     }
+
+    /* Weekly bars rise once on load, left to right (delay set per bar). */
+    .bar     { fill: #5a7a8a; transform-box: fill-box; transform-origin: 50% 100%;
+               animation: bar-rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+    .bar-now { fill: #dbbb6f; }
+    @keyframes bar-rise { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+    /* Every animated class belongs here: reduced motion freezes to the static
+       state, without scripts (Artificer non-negotiable #7). */
     @media (prefers-reduced-motion: reduce) {
-      .wstop { animation: none; }
+      .wstop, .bar { animation: none; }
     }
 
-    .wordmark { fill: url(#whimsy); font-size: 15px; font-weight: 700; letter-spacing: 0.5px; }
-    .hero     { fill: #dbbb6f; font-size: 54px; font-weight: 700; }
+    .wordmark   { fill: url(#whimsy); font-size: 15px; font-weight: 700; letter-spacing: 0.5px; }
+    .meta       { fill: #c5c8c6; font-size: 11px; }
+    .hero       { fill: url(#gold); font-size: 56px; font-weight: 700; }
     .hero-label { fill: #c5c8c6; font-size: 13px; }
-    .stat-num   { fill: #b8cad4; font-size: 20px; font-weight: 600; }
-    .stat-label { fill: #c5c8c6; font-size: 12px; }
-    .footer     { fill: #c5c8c6; font-size: 11px; }
+    .stat-num   { fill: #b8cad4; font-size: 22px; font-weight: 600; }
+    .stat-label { fill: #c5c8c6; font-size: 11px; letter-spacing: 0.2px; }
+    .star       { fill: #dbbb6f; }
+    .rule       { stroke: #dbbb6f; stroke-opacity: 0.35; stroke-width: 1; }
+    .rule-faint { stroke: #dbbb6f; stroke-opacity: 0.18; stroke-width: 1; }
   </style>
 
   <defs>
-    <!-- Whimsy gradient clipped to the wordmark glyphs. Static stop-colors give
-         the reduced-motion fallback; negative animation-delays phase-shift the
-         five stops so the cycling reads as a flowing sweep, not a uniform pulse. -->
+    <!-- Negative animation-delays phase-shift the five stops so the cycling
+         reads as a flowing sweep, not a uniform pulse. -->
     <linearGradient id="whimsy" x1="0" y1="0" x2="1" y2="0">
       <stop class="wstop" offset="0%"   stop-color="#dbbb6f" style="animation-delay: 0s"/>
       <stop class="wstop" offset="25%"  stop-color="#b095e0" style="animation-delay: -1.4s"/>
@@ -47,39 +54,104 @@
       <stop class="wstop" offset="75%"  stop-color="#6aa67d" style="animation-delay: -4.2s"/>
       <stop class="wstop" offset="100%" stop-color="#dbbb6f" style="animation-delay: -5.6s"/>
     </linearGradient>
+    <!-- Burnished gold: accent-bright at the top, accent-fill at the base. -->
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#e3c885"/>
+      <stop offset="100%" stop-color="#c4932a"/>
+    </linearGradient>
   </defs>
 
-  <!-- Card surface -->
-  <rect x="0.5" y="0.5" width="639" height="199" rx="8" fill="#292c33" stroke="#4a4f5c" stroke-width="1"/>
+  <!-- Card surface with a Deco double rule: outer border plus a faint gold inset. -->
+  <rect x="0.5" y="0.5" width="639" height="243" rx="8" fill="#292c33" stroke="#4a4f5c" stroke-width="1"/>
+  <rect x="5.5" y="5.5" width="629" height="233" rx="5" fill="none" class="rule-faint"/>
 
-  <!-- Wordmark -->
-  <text x="24" y="38" class="mono wordmark">cameronsjo</text>
-
-  <!-- Inner raised panel behind the hero stat -->
-  <rect x="24" y="56" width="280" height="112" rx="8" fill="#313540"/>
+  <!-- Header: wordmark left, update date right, Deco rule with a center diamond -->
+  <text x="24" y="40" class="mono wordmark">cameronsjo</text>
+  <text x="616" y="40" text-anchor="end" class="mono meta">updated 2026-09-23 · weekly</text>
+  <line x1="24" y1="56" x2="310" y2="56" class="rule"/>
+  <path d="M320 52 L324 56 L320 60 L316 56 Z" fill="#dbbb6f" fill-opacity="0.6"/>
+  <line x1="330" y1="56" x2="616" y2="56" class="rule"/>
 
   <!-- Hero: days since last vacation — the deadpan inverse of the "days since
        last accident" sign. A vacation = >= 3 consecutive zero-contribution days.
        Success dot reads as "currently at the bench" (not on vacation). -->
-  <text x="44" y="132" class="mono hero num">155</text>
-  <circle cx="49" cy="151.5" r="4" fill="#4a8a5e"/>
-  <text x="62" y="156" class="mono hero-label">days since last vacation</text>
+  <rect x="24" y="72" width="284" height="100" rx="8" fill="#313540"/>
+  <text x="44" y="135" class="mono hero num">155</text>
+  <circle cx="49" cy="154.5" r="4" fill="#4a8a5e"/>
+  <text x="62" y="159" class="mono hero-label">days since last vacation</text>
 
-  <!-- Supporting stats (steel) -->
+  <!-- Supporting stats, 2×2 -->
   <g transform="translate(340, 0)">
-    <text x="0" y="72" class="mono stat-num num">8</text>
-    <text x="0" y="90" class="mono stat-label">current streak</text>
+    <text x="0" y="98" class="mono stat-num num">8</text>
+    <text x="0" y="116" class="mono stat-label">day streak · best 125</text>
 
-    <text x="0" y="124" class="mono stat-num num">19141</text>
-    <text x="0" y="142" class="mono stat-label">contributions (year)</text>
+    <text x="0" y="148" class="mono stat-num num">19.2K</text>
+    <text x="0" y="166" class="mono stat-label">contributions · 1y</text>
 
-    <text x="150" y="72" class="mono stat-num num">47</text>
-    <text x="150" y="90" class="mono stat-label">public repos</text>
+    <text x="168" y="98" class="mono stat-num num">47</text>
+    <text x="168" y="116" class="mono stat-label">public repos</text>
 
-    <text x="150" y="124" class="mono stat-num num">179 ★</text>
-    <text x="150" y="142" class="mono stat-label">total stars</text>
+    <text x="168" y="148" class="mono stat-num num">179<tspan dx="6" class="star">★</tspan></text>
+    <text x="168" y="166" class="mono stat-label">stars</text>
   </g>
 
-  <!-- Footer -->
-  <text x="24" y="186" class="mono footer">updated 2026-09-23 · regenerated weekly</text>
+  <!-- Weekly contributions, past year; the current (partial) week is gold -->
+  <g transform="translate(24, 180)">
+    <rect class="bar" x="0.00" y="30.50" width="9.17" height="1.50" rx="1" style="animation-delay: 0ms"/>
+    <rect class="bar" x="11.17" y="30.50" width="9.17" height="1.50" rx="1" style="animation-delay: 12ms"/>
+    <rect class="bar" x="22.34" y="30.07" width="9.17" height="1.93" rx="1" style="animation-delay: 24ms"/>
+    <rect class="bar" x="33.51" y="30.50" width="9.17" height="1.50" rx="1" style="animation-delay: 36ms"/>
+    <rect class="bar" x="44.68" y="30.50" width="9.17" height="1.50" rx="1" style="animation-delay: 48ms"/>
+    <rect class="bar" x="55.85" y="29.70" width="9.17" height="2.30" rx="1" style="animation-delay: 60ms"/>
+    <rect class="bar" x="67.02" y="23.39" width="9.17" height="8.61" rx="1" style="animation-delay: 72ms"/>
+    <rect class="bar" x="78.19" y="29.94" width="9.17" height="2.06" rx="1" style="animation-delay: 84ms"/>
+    <rect class="bar" x="89.36" y="28.29" width="9.17" height="3.71" rx="1" style="animation-delay: 96ms"/>
+    <rect class="bar" x="100.53" y="24.72" width="9.17" height="7.28" rx="1" style="animation-delay: 108ms"/>
+    <rect class="bar" x="111.70" y="24.33" width="9.17" height="7.67" rx="1" style="animation-delay: 120ms"/>
+    <rect class="bar" x="122.87" y="27.57" width="9.17" height="4.43" rx="1" style="animation-delay: 132ms"/>
+    <rect class="bar" x="134.04" y="26.50" width="9.17" height="5.50" rx="1" style="animation-delay: 144ms"/>
+    <rect class="bar" x="145.21" y="22.02" width="9.17" height="9.98" rx="1" style="animation-delay: 156ms"/>
+    <rect class="bar" x="156.38" y="27.57" width="9.17" height="4.43" rx="1" style="animation-delay: 168ms"/>
+    <rect class="bar" x="167.55" y="27.69" width="9.17" height="4.31" rx="1" style="animation-delay: 180ms"/>
+    <rect class="bar" x="178.72" y="26.85" width="9.17" height="5.15" rx="1" style="animation-delay: 192ms"/>
+    <rect class="bar" x="189.89" y="29.94" width="9.17" height="2.06" rx="1" style="animation-delay: 204ms"/>
+    <rect class="bar" x="201.06" y="22.05" width="9.17" height="9.95" rx="1" style="animation-delay: 216ms"/>
+    <rect class="bar" x="212.23" y="24.51" width="9.17" height="7.49" rx="1" style="animation-delay: 228ms"/>
+    <rect class="bar" x="223.40" y="21.23" width="9.17" height="10.77" rx="1" style="animation-delay: 240ms"/>
+    <rect class="bar" x="234.57" y="19.63" width="9.17" height="12.37" rx="1" style="animation-delay: 252ms"/>
+    <rect class="bar" x="245.74" y="19.10" width="9.17" height="12.90" rx="1" style="animation-delay: 264ms"/>
+    <rect class="bar" x="256.91" y="18.80" width="9.17" height="13.20" rx="1" style="animation-delay: 276ms"/>
+    <rect class="bar" x="268.08" y="18.80" width="9.17" height="13.20" rx="1" style="animation-delay: 288ms"/>
+    <rect class="bar" x="279.25" y="19.73" width="9.17" height="12.27" rx="1" style="animation-delay: 300ms"/>
+    <rect class="bar" x="290.42" y="17.94" width="9.17" height="14.06" rx="1" style="animation-delay: 312ms"/>
+    <rect class="bar" x="301.58" y="18.78" width="9.17" height="13.22" rx="1" style="animation-delay: 324ms"/>
+    <rect class="bar" x="312.75" y="21.48" width="9.17" height="10.52" rx="1" style="animation-delay: 336ms"/>
+    <rect class="bar" x="323.92" y="28.15" width="9.17" height="3.85" rx="1" style="animation-delay: 348ms"/>
+    <rect class="bar" x="335.09" y="19.48" width="9.17" height="12.52" rx="1" style="animation-delay: 360ms"/>
+    <rect class="bar" x="346.26" y="24.47" width="9.17" height="7.53" rx="1" style="animation-delay: 372ms"/>
+    <rect class="bar" x="357.43" y="23.96" width="9.17" height="8.04" rx="1" style="animation-delay: 384ms"/>
+    <rect class="bar" x="368.60" y="21.13" width="9.17" height="10.87" rx="1" style="animation-delay: 396ms"/>
+    <rect class="bar" x="379.77" y="22.07" width="9.17" height="9.93" rx="1" style="animation-delay: 408ms"/>
+    <rect class="bar" x="390.94" y="17.89" width="9.17" height="14.11" rx="1" style="animation-delay: 420ms"/>
+    <rect class="bar" x="402.11" y="14.49" width="9.17" height="17.51" rx="1" style="animation-delay: 432ms"/>
+    <rect class="bar" x="413.28" y="15.82" width="9.17" height="16.18" rx="1" style="animation-delay: 444ms"/>
+    <rect class="bar" x="424.45" y="16.96" width="9.17" height="15.04" rx="1" style="animation-delay: 456ms"/>
+    <rect class="bar" x="435.62" y="17.59" width="9.17" height="14.41" rx="1" style="animation-delay: 468ms"/>
+    <rect class="bar" x="446.79" y="13.75" width="9.17" height="18.25" rx="1" style="animation-delay: 480ms"/>
+    <rect class="bar" x="457.96" y="10.34" width="9.17" height="21.66" rx="1" style="animation-delay: 492ms"/>
+    <rect class="bar" x="469.13" y="16.25" width="9.17" height="15.75" rx="1" style="animation-delay: 504ms"/>
+    <rect class="bar" x="480.30" y="12.07" width="9.17" height="19.93" rx="1" style="animation-delay: 516ms"/>
+    <rect class="bar" x="491.47" y="7.08" width="9.17" height="24.92" rx="1" style="animation-delay: 528ms"/>
+    <rect class="bar" x="502.64" y="7.48" width="9.17" height="24.52" rx="1" style="animation-delay: 540ms"/>
+    <rect class="bar" x="513.81" y="15.01" width="9.17" height="16.99" rx="1" style="animation-delay: 552ms"/>
+    <rect class="bar" x="524.98" y="10.01" width="9.17" height="21.99" rx="1" style="animation-delay: 564ms"/>
+    <rect class="bar" x="536.15" y="9.38" width="9.17" height="22.62" rx="1" style="animation-delay: 576ms"/>
+    <rect class="bar" x="547.32" y="5.01" width="9.17" height="26.99" rx="1" style="animation-delay: 588ms"/>
+    <rect class="bar" x="558.49" y="0.00" width="9.17" height="32.00" rx="1" style="animation-delay: 600ms"/>
+    <rect class="bar" x="569.66" y="12.91" width="9.17" height="19.09" rx="1" style="animation-delay: 612ms"/>
+    <rect class="bar bar-now" x="580.83" y="12.92" width="9.17" height="19.08" rx="1" style="animation-delay: 624ms"/>
+  </g>
+  <text x="24" y="228" class="mono meta">contributions per week · past year</text>
+  <rect x="540" y="220" width="8" height="8" rx="1" fill="#dbbb6f"/>
+  <text x="616" y="228" text-anchor="end" class="mono meta">this week</text>
 </svg>

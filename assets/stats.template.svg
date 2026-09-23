@@ -1,20 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="200" viewBox="0 0 640 200" role="img" aria-label="GitHub stats for cameronsjo">
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="244" viewBox="0 0 640 244" role="img" aria-label="GitHub stats for cameronsjo: {{DAYS_SINCE_VACATION}} days since last vacation, {{CURRENT_STREAK}}-day streak, {{TOTAL_CONTRIB}} contributions in the past year, {{PUBLIC_REPOS}} public repos, {{TOTAL_STARS}} stars">
   <!--
-    Artificer v0.12 dark stats card — baseline template.
+    Artificer v0.26 dark stats card.
     Placeholders ({{...}}) are string-substituted by scripts/generate-profile.mjs.
-    Visual polish is iterated via the design-system handoff; placeholders stay stable.
     No <script>, no external refs — GitHub's camo <img> proxy strips them.
-    Font: monospace stack (a base64 JetBrains Mono subset is embedded in the design pass).
+    Motion is CSS-only and collapses to the static state under reduced motion.
   -->
   <style>
     .mono  { font-family: ui-monospace, "JetBrains Mono", "SFMono-Regular", Menlo, monospace; }
     .num   { font-variant-numeric: tabular-nums; }
 
-    /* Whimsy — the one sanctioned exception (Artificer v0.10 .whimsy--brand).
-       Real semantic tokens in motion: gold → rose → purple → steel → green.
-       CSS-only port: JS is stripped from GitHub-proxied img SVGs, so the flow
-       lives in @keyframes on the gradient stops. Reduced-motion freezes it to a
-       static burnished gradient — non-negotiable #7, honored without scripts. */
+    /* Whimsy — the one sanctioned exception (Artificer .whimsy--brand).
+       Real semantic tokens in motion: gold → rose → purple → steel → green. */
     .wstop { animation: whimsy-cycle 7s linear infinite; }
     @keyframes whimsy-cycle {
       0%   { stop-color: #dbbb6f; } /* gold   */
@@ -24,22 +20,33 @@
       80%  { stop-color: #6aa67d; } /* green  */
       100% { stop-color: #dbbb6f; } /* → gold */
     }
+
+    /* Weekly bars rise once on load, left to right (delay set per bar). */
+    .bar     { fill: #5a7a8a; transform-box: fill-box; transform-origin: 50% 100%;
+               animation: bar-rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+    .bar-now { fill: #dbbb6f; }
+    @keyframes bar-rise { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+    /* Every animated class belongs here: reduced motion freezes to the static
+       state, without scripts (Artificer non-negotiable #7). */
     @media (prefers-reduced-motion: reduce) {
-      .wstop { animation: none; }
+      .wstop, .bar { animation: none; }
     }
 
-    .wordmark { fill: url(#whimsy); font-size: 15px; font-weight: 700; letter-spacing: 0.5px; }
-    .hero     { fill: #dbbb6f; font-size: 54px; font-weight: 700; }
+    .wordmark   { fill: url(#whimsy); font-size: 15px; font-weight: 700; letter-spacing: 0.5px; }
+    .meta       { fill: #c5c8c6; font-size: 11px; }
+    .hero       { fill: url(#gold); font-size: 56px; font-weight: 700; }
     .hero-label { fill: #c5c8c6; font-size: 13px; }
-    .stat-num   { fill: #b8cad4; font-size: 20px; font-weight: 600; }
-    .stat-label { fill: #c5c8c6; font-size: 12px; }
-    .footer     { fill: #c5c8c6; font-size: 11px; }
+    .stat-num   { fill: #b8cad4; font-size: 22px; font-weight: 600; }
+    .stat-label { fill: #c5c8c6; font-size: 11px; letter-spacing: 0.2px; }
+    .star       { fill: #dbbb6f; }
+    .rule       { stroke: #dbbb6f; stroke-opacity: 0.35; stroke-width: 1; }
+    .rule-faint { stroke: #dbbb6f; stroke-opacity: 0.18; stroke-width: 1; }
   </style>
 
   <defs>
-    <!-- Whimsy gradient clipped to the wordmark glyphs. Static stop-colors give
-         the reduced-motion fallback; negative animation-delays phase-shift the
-         five stops so the cycling reads as a flowing sweep, not a uniform pulse. -->
+    <!-- Negative animation-delays phase-shift the five stops so the cycling
+         reads as a flowing sweep, not a uniform pulse. -->
     <linearGradient id="whimsy" x1="0" y1="0" x2="1" y2="0">
       <stop class="wstop" offset="0%"   stop-color="#dbbb6f" style="animation-delay: 0s"/>
       <stop class="wstop" offset="25%"  stop-color="#b095e0" style="animation-delay: -1.4s"/>
@@ -47,39 +54,52 @@
       <stop class="wstop" offset="75%"  stop-color="#6aa67d" style="animation-delay: -4.2s"/>
       <stop class="wstop" offset="100%" stop-color="#dbbb6f" style="animation-delay: -5.6s"/>
     </linearGradient>
+    <!-- Burnished gold: accent-bright at the top, accent-fill at the base. -->
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#e3c885"/>
+      <stop offset="100%" stop-color="#c4932a"/>
+    </linearGradient>
   </defs>
 
-  <!-- Card surface -->
-  <rect x="0.5" y="0.5" width="639" height="199" rx="8" fill="#292c33" stroke="#4a4f5c" stroke-width="1"/>
+  <!-- Card surface with a Deco double rule: outer border plus a faint gold inset. -->
+  <rect x="0.5" y="0.5" width="639" height="243" rx="8" fill="#292c33" stroke="#4a4f5c" stroke-width="1"/>
+  <rect x="5.5" y="5.5" width="629" height="233" rx="5" fill="none" class="rule-faint"/>
 
-  <!-- Wordmark -->
-  <text x="24" y="38" class="mono wordmark">cameronsjo</text>
-
-  <!-- Inner raised panel behind the hero stat -->
-  <rect x="24" y="56" width="280" height="112" rx="8" fill="#313540"/>
+  <!-- Header: wordmark left, update date right, Deco rule with a center diamond -->
+  <text x="24" y="40" class="mono wordmark">cameronsjo</text>
+  <text x="616" y="40" text-anchor="end" class="mono meta">updated {{UPDATED}} · weekly</text>
+  <line x1="24" y1="56" x2="310" y2="56" class="rule"/>
+  <path d="M320 52 L324 56 L320 60 L316 56 Z" fill="#dbbb6f" fill-opacity="0.6"/>
+  <line x1="330" y1="56" x2="616" y2="56" class="rule"/>
 
   <!-- Hero: days since last vacation — the deadpan inverse of the "days since
        last accident" sign. A vacation = >= 3 consecutive zero-contribution days.
        Success dot reads as "currently at the bench" (not on vacation). -->
-  <text x="44" y="132" class="mono hero num">{{DAYS_SINCE_VACATION}}</text>
-  <circle cx="49" cy="151.5" r="4" fill="#4a8a5e"/>
-  <text x="62" y="156" class="mono hero-label">days since last vacation</text>
+  <rect x="24" y="72" width="284" height="100" rx="8" fill="#313540"/>
+  <text x="44" y="135" class="mono hero num">{{DAYS_SINCE_VACATION}}</text>
+  <circle cx="49" cy="154.5" r="4" fill="#4a8a5e"/>
+  <text x="62" y="159" class="mono hero-label">days since last vacation</text>
 
-  <!-- Supporting stats (steel) -->
+  <!-- Supporting stats, 2×2 -->
   <g transform="translate(340, 0)">
-    <text x="0" y="72" class="mono stat-num num">{{CURRENT_STREAK}}</text>
-    <text x="0" y="90" class="mono stat-label">current streak</text>
+    <text x="0" y="98" class="mono stat-num num">{{CURRENT_STREAK}}</text>
+    <text x="0" y="116" class="mono stat-label">day streak · best {{LONGEST_STREAK}}</text>
 
-    <text x="0" y="124" class="mono stat-num num">{{TOTAL_CONTRIB}}</text>
-    <text x="0" y="142" class="mono stat-label">contributions (year)</text>
+    <text x="0" y="148" class="mono stat-num num">{{TOTAL_CONTRIB_SHORT}}</text>
+    <text x="0" y="166" class="mono stat-label">contributions · 1y</text>
 
-    <text x="150" y="72" class="mono stat-num num">{{PUBLIC_REPOS}}</text>
-    <text x="150" y="90" class="mono stat-label">public repos</text>
+    <text x="168" y="98" class="mono stat-num num">{{PUBLIC_REPOS}}</text>
+    <text x="168" y="116" class="mono stat-label">public repos</text>
 
-    <text x="150" y="124" class="mono stat-num num">{{TOTAL_STARS}} ★</text>
-    <text x="150" y="142" class="mono stat-label">total stars</text>
+    <text x="168" y="148" class="mono stat-num num">{{TOTAL_STARS}}<tspan dx="6" class="star">★</tspan></text>
+    <text x="168" y="166" class="mono stat-label">stars</text>
   </g>
 
-  <!-- Footer -->
-  <text x="24" y="186" class="mono footer">updated {{UPDATED}} · regenerated weekly</text>
+  <!-- Weekly contributions, past year; the current (partial) week is gold -->
+  <g transform="translate(24, 180)">
+    {{WEEK_BARS}}
+  </g>
+  <text x="24" y="228" class="mono meta">contributions per week · past year</text>
+  <rect x="540" y="220" width="8" height="8" rx="1" fill="#dbbb6f"/>
+  <text x="616" y="228" text-anchor="end" class="mono meta">this week</text>
 </svg>
