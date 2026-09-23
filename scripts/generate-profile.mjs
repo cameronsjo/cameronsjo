@@ -10,7 +10,8 @@
 // Auth: STATS_TOKEN is a classic PAT with no scopes and no expiration. Every
 // query reads public data only; private contributions still count because the
 // profile's "Include private contributions" setting puts them in the public
-// calendar. Falls back to GITHUB_TOKEN if STATS_TOKEN is absent.
+// calendar. Falls back to GITHUB_TOKEN if STATS_TOKEN is absent, or if GitHub
+// rejects it with a 401.
 
 import { readFile, writeFile } from "node:fs/promises";
 import { appendFileSync } from "node:fs";
@@ -21,8 +22,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 
 const LOGIN = process.env.PROFILE_LOGIN || "cameronsjo";
-const TOKEN = process.env.STATS_TOKEN || process.env.GITHUB_TOKEN;
-const USING_PAT = Boolean(process.env.STATS_TOKEN);
+// Reassigned once, by gql(), when STATS_TOKEN is rejected and GITHUB_TOKEN is
+// available: public stats keep refreshing on the fallback instead of failing.
+let TOKEN = process.env.STATS_TOKEN || process.env.GITHUB_TOKEN;
+let USING_PAT = Boolean(process.env.STATS_TOKEN);
 
 // GitHub returns the PAT's expiration in a response header; captured per-call so
 // the workflow can warn before it lapses. (GITHUB_TOKEN's ~1h expiry is ignored.)
@@ -38,15 +41,33 @@ if (!TOKEN) {
 const GRAPHQL = "https://api.github.com/graphql";
 
 async function gql(query, variables) {
+  // Captured per request: calls run concurrently (Promise.all), so a sibling
+  // may switch TOKEN while this one is in flight. The retry decision must
+  // follow the token this request actually sent.
+  const sent = TOKEN;
   const res = await fetch(GRAPHQL, {
     method: "POST",
     headers: {
-      Authorization: `bearer ${TOKEN}`,
+      Authorization: `bearer ${sent}`,
       "Content-Type": "application/json",
       "User-Agent": `${LOGIN}-profile-generator`,
     },
     body: JSON.stringify({ query, variables }),
   });
+  const fallback = process.env.GITHUB_TOKEN;
+  if (res.status === 401 && sent === process.env.STATS_TOKEN && fallback && fallback !== sent) {
+    // A revoked or deleted PAT. Say so once in the run log (a ::warning:: shows
+    // as an annotation), then retry this and every later call on GITHUB_TOKEN.
+    // Private contributions drop out of the counts until STATS_TOKEN is fixed.
+    if (USING_PAT) {
+      console.log(
+        "::warning::STATS_TOKEN was rejected (HTTP 401); falling back to GITHUB_TOKEN. Rotate it: ./scripts/setup-stats-token.sh",
+      );
+      TOKEN = fallback;
+      USING_PAT = false;
+    }
+    return gql(query, variables);
+  }
   const exp = res.headers.get("github-authentication-token-expiration");
   if (exp) tokenExpiry = exp;
   if (!res.ok) {
