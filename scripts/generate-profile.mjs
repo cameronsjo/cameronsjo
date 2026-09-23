@@ -6,9 +6,10 @@
 // math locally; renders assets/stats.svg from assets/stats.template.svg; and
 // rewrites the README's pinned-repo block between PINS markers.
 //
-// Auth: STATS_TOKEN (classic PAT with repo + read:user) makes private
-// contributions count toward the streak. Falls back to GITHUB_TOKEN
-// (public-only contributions) if STATS_TOKEN is absent.
+// Auth: STATS_TOKEN is a classic PAT with no scopes and no expiration. Every
+// query reads public data only; private contributions still count because the
+// profile's "Include private contributions" setting puts them in the public
+// calendar. Falls back to GITHUB_TOKEN if STATS_TOKEN is absent.
 
 import { readFile, writeFile } from "node:fs/promises";
 import { appendFileSync } from "node:fs";
