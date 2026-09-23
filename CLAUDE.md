@@ -7,7 +7,7 @@ Self-healing GitHub profile README. A weekly Action regenerates the stats card a
 - `scripts/generate-profile.mjs` (zero-dep, Node 20+) queries the GitHub GraphQL API, renders `assets/stats.svg` from `assets/stats.template.svg` (string-substitutes `{{TOKEN}}` placeholders), and rewrites the README pins block between `<!-- PINS:START -->` / `<!-- PINS:END -->`.
 - `.github/workflows/profile.yml` runs it Mondays + on `workflow_dispatch`; commits only if something changed.
 - All stats math is local — current and longest streak, `days since last vacation` (= ≥3 consecutive zero-contribution days), contributions, repos, stars, and a weekly-contributions bar strip. No third-party widget; we own the numbers.
-- Template values are XML-escaped by `renderSvg`; only keys in `RAW_PLACEHOLDERS` (`WEEK_BARS`, generated from numbers) are inserted as markup. The bar strip uses a square-root scale so quiet weeks stay visible beside a busy peak.
+- Template values are XML-escaped by `renderSvg`; only keys in `RAW_PLACEHOLDERS` are inserted as markup: `WEEK_BARS` (built from numbers) and `FONT_FACES` (base64 of the committed font files). The bar strip uses a square-root scale so quiet weeks stay visible beside a busy peak.
 
 ## Gotchas
 
