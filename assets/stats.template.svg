@@ -6,7 +6,8 @@
     Motion is CSS-only and collapses to the static state under reduced motion.
   -->
   <style>
-    .mono  { font-family: ui-monospace, "JetBrains Mono", "SFMono-Regular", Menlo, monospace; }
+    {{FONT_FACES}}
+    .mono  { font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace; }
     .num   { font-variant-numeric: tabular-nums; }
 
     /* Whimsy — the one sanctioned exception (Artificer .whimsy--brand).
