@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="244" viewBox="0 0 640 244" role="img" aria-label="GitHub stats for cameronsjo: 155 days since last vacation, 8-day streak, 19204 contributions in the past year, 47 public repos, 179 stars">
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="244" viewBox="0 0 640 244" role="img" aria-label="GitHub stats for cameronsjo: 161 days since last vacation, 13-day streak, 20809 contributions in the past year, 48 public repos, 181 stars">
   <!--
     Artificer v0.26 stats card, written in the dark palette. The generator
     derives assets/stats-light.svg by mapping each hex (LIGHT_THEME), so every
@@ -72,7 +72,7 @@
 
   <!-- Header: wordmark left, update date right, Deco rule with a center diamond -->
   <text x="24" y="40" class="mono wordmark">cameronsjo</text>
-  <text x="616" y="40" text-anchor="end" class="mono meta">updated 2026-09-23 · weekly</text>
+  <text x="616" y="40" text-anchor="end" class="mono meta">updated 2026-09-28 · weekly</text>
   <line x1="24" y1="56" x2="310" y2="56" class="rule"/>
   <path d="M320 52 L324 56 L320 60 L316 56 Z" fill="#dbbb6f" fill-opacity="0.6"/>
   <line x1="330" y1="56" x2="616" y2="56" class="rule"/>
@@ -81,80 +81,80 @@
        last accident" sign. A vacation = >= 3 consecutive zero-contribution days.
        Success dot reads as "currently at the bench" (not on vacation). -->
   <rect x="24" y="72" width="284" height="100" rx="8" fill="#313540"/>
-  <text x="44" y="135" class="mono hero num">155</text>
+  <text x="44" y="135" class="mono hero num">161</text>
   <circle cx="49" cy="154.5" r="4" fill="#4a8a5e"/>
   <text x="62" y="159" class="mono hero-label">days since last vacation</text>
 
   <!-- Supporting stats, 2×2 -->
   <g transform="translate(340, 0)">
-    <text x="0" y="98" class="mono stat-num num">8</text>
+    <text x="0" y="98" class="mono stat-num num">13</text>
     <text x="0" y="116" class="mono stat-label">day streak · best 125</text>
 
-    <text x="0" y="148" class="mono stat-num num">19.2K</text>
+    <text x="0" y="148" class="mono stat-num num">20.8K</text>
     <text x="0" y="166" class="mono stat-label">contributions · 1y</text>
 
-    <text x="168" y="98" class="mono stat-num num">47</text>
+    <text x="168" y="98" class="mono stat-num num">48</text>
     <text x="168" y="116" class="mono stat-label">public repos</text>
 
-    <text x="168" y="148" class="mono stat-num num">179<tspan dx="6" class="star">★</tspan></text>
+    <text x="168" y="148" class="mono stat-num num">181<tspan dx="6" class="star">★</tspan></text>
     <text x="168" y="166" class="mono stat-label">stars</text>
   </g>
 
   <!-- Weekly contributions, past year; the current (partial) week is gold -->
   <g transform="translate(24, 180)">
     <rect class="bar" x="0.00" y="30.50" width="9.17" height="1.50" rx="1" style="animation-delay: 0ms"/>
-    <rect class="bar" x="11.17" y="30.50" width="9.17" height="1.50" rx="1" style="animation-delay: 12ms"/>
-    <rect class="bar" x="22.34" y="30.07" width="9.17" height="1.93" rx="1" style="animation-delay: 24ms"/>
+    <rect class="bar" x="11.17" y="30.17" width="9.17" height="1.83" rx="1" style="animation-delay: 12ms"/>
+    <rect class="bar" x="22.34" y="30.50" width="9.17" height="1.50" rx="1" style="animation-delay: 24ms"/>
     <rect class="bar" x="33.51" y="30.50" width="9.17" height="1.50" rx="1" style="animation-delay: 36ms"/>
-    <rect class="bar" x="44.68" y="30.50" width="9.17" height="1.50" rx="1" style="animation-delay: 48ms"/>
-    <rect class="bar" x="55.85" y="29.70" width="9.17" height="2.30" rx="1" style="animation-delay: 60ms"/>
-    <rect class="bar" x="67.02" y="23.39" width="9.17" height="8.61" rx="1" style="animation-delay: 72ms"/>
-    <rect class="bar" x="78.19" y="29.94" width="9.17" height="2.06" rx="1" style="animation-delay: 84ms"/>
-    <rect class="bar" x="89.36" y="28.29" width="9.17" height="3.71" rx="1" style="animation-delay: 96ms"/>
-    <rect class="bar" x="100.53" y="24.72" width="9.17" height="7.28" rx="1" style="animation-delay: 108ms"/>
-    <rect class="bar" x="111.70" y="24.33" width="9.17" height="7.67" rx="1" style="animation-delay: 120ms"/>
-    <rect class="bar" x="122.87" y="27.57" width="9.17" height="4.43" rx="1" style="animation-delay: 132ms"/>
-    <rect class="bar" x="134.04" y="26.50" width="9.17" height="5.50" rx="1" style="animation-delay: 144ms"/>
-    <rect class="bar" x="145.21" y="22.02" width="9.17" height="9.98" rx="1" style="animation-delay: 156ms"/>
-    <rect class="bar" x="156.38" y="27.57" width="9.17" height="4.43" rx="1" style="animation-delay: 168ms"/>
-    <rect class="bar" x="167.55" y="27.69" width="9.17" height="4.31" rx="1" style="animation-delay: 180ms"/>
-    <rect class="bar" x="178.72" y="26.85" width="9.17" height="5.15" rx="1" style="animation-delay: 192ms"/>
-    <rect class="bar" x="189.89" y="29.94" width="9.17" height="2.06" rx="1" style="animation-delay: 204ms"/>
-    <rect class="bar" x="201.06" y="22.05" width="9.17" height="9.95" rx="1" style="animation-delay: 216ms"/>
-    <rect class="bar" x="212.23" y="24.51" width="9.17" height="7.49" rx="1" style="animation-delay: 228ms"/>
-    <rect class="bar" x="223.40" y="21.23" width="9.17" height="10.77" rx="1" style="animation-delay: 240ms"/>
-    <rect class="bar" x="234.57" y="19.63" width="9.17" height="12.37" rx="1" style="animation-delay: 252ms"/>
-    <rect class="bar" x="245.74" y="19.10" width="9.17" height="12.90" rx="1" style="animation-delay: 264ms"/>
-    <rect class="bar" x="256.91" y="18.80" width="9.17" height="13.20" rx="1" style="animation-delay: 276ms"/>
-    <rect class="bar" x="268.08" y="18.80" width="9.17" height="13.20" rx="1" style="animation-delay: 288ms"/>
-    <rect class="bar" x="279.25" y="19.73" width="9.17" height="12.27" rx="1" style="animation-delay: 300ms"/>
-    <rect class="bar" x="290.42" y="17.94" width="9.17" height="14.06" rx="1" style="animation-delay: 312ms"/>
-    <rect class="bar" x="301.58" y="18.78" width="9.17" height="13.22" rx="1" style="animation-delay: 324ms"/>
-    <rect class="bar" x="312.75" y="21.48" width="9.17" height="10.52" rx="1" style="animation-delay: 336ms"/>
-    <rect class="bar" x="323.92" y="28.15" width="9.17" height="3.85" rx="1" style="animation-delay: 348ms"/>
-    <rect class="bar" x="335.09" y="19.48" width="9.17" height="12.52" rx="1" style="animation-delay: 360ms"/>
-    <rect class="bar" x="346.26" y="24.47" width="9.17" height="7.53" rx="1" style="animation-delay: 372ms"/>
-    <rect class="bar" x="357.43" y="23.96" width="9.17" height="8.04" rx="1" style="animation-delay: 384ms"/>
-    <rect class="bar" x="368.60" y="21.13" width="9.17" height="10.87" rx="1" style="animation-delay: 396ms"/>
-    <rect class="bar" x="379.77" y="22.07" width="9.17" height="9.93" rx="1" style="animation-delay: 408ms"/>
-    <rect class="bar" x="390.94" y="17.89" width="9.17" height="14.11" rx="1" style="animation-delay: 420ms"/>
-    <rect class="bar" x="402.11" y="14.49" width="9.17" height="17.51" rx="1" style="animation-delay: 432ms"/>
-    <rect class="bar" x="413.28" y="15.82" width="9.17" height="16.18" rx="1" style="animation-delay: 444ms"/>
-    <rect class="bar" x="424.45" y="16.96" width="9.17" height="15.04" rx="1" style="animation-delay: 456ms"/>
-    <rect class="bar" x="435.62" y="17.59" width="9.17" height="14.41" rx="1" style="animation-delay: 468ms"/>
-    <rect class="bar" x="446.79" y="13.75" width="9.17" height="18.25" rx="1" style="animation-delay: 480ms"/>
-    <rect class="bar" x="457.96" y="10.34" width="9.17" height="21.66" rx="1" style="animation-delay: 492ms"/>
-    <rect class="bar" x="469.13" y="16.25" width="9.17" height="15.75" rx="1" style="animation-delay: 504ms"/>
-    <rect class="bar" x="480.30" y="12.07" width="9.17" height="19.93" rx="1" style="animation-delay: 516ms"/>
-    <rect class="bar" x="491.47" y="7.08" width="9.17" height="24.92" rx="1" style="animation-delay: 528ms"/>
-    <rect class="bar" x="502.64" y="7.48" width="9.17" height="24.52" rx="1" style="animation-delay: 540ms"/>
-    <rect class="bar" x="513.81" y="15.01" width="9.17" height="16.99" rx="1" style="animation-delay: 552ms"/>
-    <rect class="bar" x="524.98" y="10.01" width="9.17" height="21.99" rx="1" style="animation-delay: 564ms"/>
-    <rect class="bar" x="536.15" y="9.38" width="9.17" height="22.62" rx="1" style="animation-delay: 576ms"/>
-    <rect class="bar" x="547.32" y="5.01" width="9.17" height="26.99" rx="1" style="animation-delay: 588ms"/>
-    <rect class="bar" x="558.49" y="0.00" width="9.17" height="32.00" rx="1" style="animation-delay: 600ms"/>
-    <rect class="bar" x="569.66" y="12.91" width="9.17" height="19.09" rx="1" style="animation-delay: 612ms"/>
-    <rect class="bar bar-now" x="580.83" y="12.32" width="9.17" height="19.68" rx="1" style="animation-delay: 624ms"/>
+    <rect class="bar" x="44.68" y="29.81" width="9.17" height="2.19" rx="1" style="animation-delay: 48ms"/>
+    <rect class="bar" x="55.85" y="23.82" width="9.17" height="8.18" rx="1" style="animation-delay: 60ms"/>
+    <rect class="bar" x="67.02" y="30.04" width="9.17" height="1.96" rx="1" style="animation-delay: 72ms"/>
+    <rect class="bar" x="78.19" y="28.47" width="9.17" height="3.53" rx="1" style="animation-delay: 84ms"/>
+    <rect class="bar" x="89.36" y="25.08" width="9.17" height="6.92" rx="1" style="animation-delay: 96ms"/>
+    <rect class="bar" x="100.53" y="24.71" width="9.17" height="7.29" rx="1" style="animation-delay: 108ms"/>
+    <rect class="bar" x="111.70" y="27.79" width="9.17" height="4.21" rx="1" style="animation-delay: 120ms"/>
+    <rect class="bar" x="122.87" y="26.78" width="9.17" height="5.22" rx="1" style="animation-delay: 132ms"/>
+    <rect class="bar" x="134.04" y="22.52" width="9.17" height="9.48" rx="1" style="animation-delay: 144ms"/>
+    <rect class="bar" x="145.21" y="27.79" width="9.17" height="4.21" rx="1" style="animation-delay: 156ms"/>
+    <rect class="bar" x="156.38" y="27.91" width="9.17" height="4.09" rx="1" style="animation-delay: 168ms"/>
+    <rect class="bar" x="167.55" y="27.11" width="9.17" height="4.89" rx="1" style="animation-delay: 180ms"/>
+    <rect class="bar" x="178.72" y="30.04" width="9.17" height="1.96" rx="1" style="animation-delay: 192ms"/>
+    <rect class="bar" x="189.89" y="22.54" width="9.17" height="9.46" rx="1" style="animation-delay: 204ms"/>
+    <rect class="bar" x="201.06" y="24.88" width="9.17" height="7.12" rx="1" style="animation-delay: 216ms"/>
+    <rect class="bar" x="212.23" y="21.84" width="9.17" height="10.16" rx="1" style="animation-delay: 228ms"/>
+    <rect class="bar" x="223.40" y="20.24" width="9.17" height="11.76" rx="1" style="animation-delay: 240ms"/>
+    <rect class="bar" x="234.57" y="19.75" width="9.17" height="12.25" rx="1" style="animation-delay: 252ms"/>
+    <rect class="bar" x="245.74" y="19.46" width="9.17" height="12.54" rx="1" style="animation-delay: 264ms"/>
+    <rect class="bar" x="256.91" y="19.46" width="9.17" height="12.54" rx="1" style="animation-delay: 276ms"/>
+    <rect class="bar" x="268.08" y="20.35" width="9.17" height="11.65" rx="1" style="animation-delay: 288ms"/>
+    <rect class="bar" x="279.25" y="18.64" width="9.17" height="13.36" rx="1" style="animation-delay: 300ms"/>
+    <rect class="bar" x="290.42" y="19.44" width="9.17" height="12.56" rx="1" style="animation-delay: 312ms"/>
+    <rect class="bar" x="301.58" y="22.00" width="9.17" height="10.00" rx="1" style="animation-delay: 324ms"/>
+    <rect class="bar" x="312.75" y="28.34" width="9.17" height="3.66" rx="1" style="animation-delay: 336ms"/>
+    <rect class="bar" x="323.92" y="20.10" width="9.17" height="11.90" rx="1" style="animation-delay: 348ms"/>
+    <rect class="bar" x="335.09" y="24.85" width="9.17" height="7.15" rx="1" style="animation-delay: 360ms"/>
+    <rect class="bar" x="346.26" y="24.36" width="9.17" height="7.64" rx="1" style="animation-delay: 372ms"/>
+    <rect class="bar" x="357.43" y="21.67" width="9.17" height="10.33" rx="1" style="animation-delay: 384ms"/>
+    <rect class="bar" x="368.60" y="22.57" width="9.17" height="9.43" rx="1" style="animation-delay: 396ms"/>
+    <rect class="bar" x="379.77" y="18.59" width="9.17" height="13.41" rx="1" style="animation-delay: 408ms"/>
+    <rect class="bar" x="390.94" y="15.36" width="9.17" height="16.64" rx="1" style="animation-delay: 420ms"/>
+    <rect class="bar" x="402.11" y="16.63" width="9.17" height="15.37" rx="1" style="animation-delay: 432ms"/>
+    <rect class="bar" x="413.28" y="17.71" width="9.17" height="14.29" rx="1" style="animation-delay: 444ms"/>
+    <rect class="bar" x="424.45" y="18.31" width="9.17" height="13.69" rx="1" style="animation-delay: 456ms"/>
+    <rect class="bar" x="435.62" y="14.66" width="9.17" height="17.34" rx="1" style="animation-delay: 468ms"/>
+    <rect class="bar" x="446.79" y="11.41" width="9.17" height="20.59" rx="1" style="animation-delay: 480ms"/>
+    <rect class="bar" x="457.96" y="17.04" width="9.17" height="14.96" rx="1" style="animation-delay: 492ms"/>
+    <rect class="bar" x="469.13" y="13.06" width="9.17" height="18.94" rx="1" style="animation-delay: 504ms"/>
+    <rect class="bar" x="480.30" y="8.32" width="9.17" height="23.68" rx="1" style="animation-delay: 516ms"/>
+    <rect class="bar" x="491.47" y="8.70" width="9.17" height="23.30" rx="1" style="animation-delay: 528ms"/>
+    <rect class="bar" x="502.64" y="15.85" width="9.17" height="16.15" rx="1" style="animation-delay: 540ms"/>
+    <rect class="bar" x="513.81" y="11.10" width="9.17" height="20.90" rx="1" style="animation-delay: 552ms"/>
+    <rect class="bar" x="524.98" y="10.51" width="9.17" height="21.49" rx="1" style="animation-delay: 564ms"/>
+    <rect class="bar" x="536.15" y="6.36" width="9.17" height="25.64" rx="1" style="animation-delay: 576ms"/>
+    <rect class="bar" x="547.32" y="1.54" width="9.17" height="30.46" rx="1" style="animation-delay: 588ms"/>
+    <rect class="bar" x="558.49" y="13.86" width="9.17" height="18.14" rx="1" style="animation-delay: 600ms"/>
+    <rect class="bar" x="569.66" y="0.00" width="9.17" height="32.00" rx="1" style="animation-delay: 612ms"/>
+    <rect class="bar bar-now" x="580.83" y="22.44" width="9.17" height="9.56" rx="1" style="animation-delay: 624ms"/>
   </g>
   <text x="24" y="228" class="mono meta">contributions per week · past year</text>
   <rect x="540" y="220" width="8" height="8" rx="1" fill="#dbbb6f"/>
