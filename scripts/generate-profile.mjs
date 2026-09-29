@@ -223,6 +223,69 @@ function daysSinceLastVacation(calendar) {
   return { days: Math.round((today - end) / ms) };
 }
 
+// ── Sploot ──────────────────────────────────────────────────────────────────
+// Artificer's corgi. The blog draws it in block characters from the same pixel
+// grids (cameronsjo/blog src/lib/sploot.ts); here each `#` becomes a 3×6 rect,
+// keeping the tall-pixel proportions of the text version. Sploot's mood tracks
+// the hero stat: perky after a real break, ears drooping as the days pile up,
+// flat-out asleep past three months (or a year with no break at all).
+
+const SPLOOT = {
+  perky: [
+    "....................#...#.....",
+    "...................###.###....",
+    "...................#######....",
+    ".####################.######..",
+    "##############################",
+    "##########################....",
+    ".#######################......",
+    "...##..##..........##..##.....",
+  ],
+  drooping: [
+    "..............................",
+    "..............................",
+    "....................##..##....",
+    "...................#######....",
+    ".####################.######..",
+    "##############################",
+    "#########################.....",
+    "...##..##..........##..##.....",
+  ],
+  asleep: [
+    "..............................",
+    "..............................",
+    "....................#...#.....",
+    "...................###.###....",
+    "...########################...",
+    "..##########################..",
+    "..#########################...",
+    "############################..",
+  ],
+};
+const SPLOOT_PX_W = 3;
+const SPLOOT_PX_H = 6;
+
+function splootMood(vacation) {
+  if (vacation.none) return "asleep";
+  if (vacation.days <= 30) return "perky";
+  if (vacation.days <= 90) return "drooping";
+  return "asleep";
+}
+
+// One rect per horizontal run of pixels; asleep adds two z's over the head.
+function renderSploot(mood) {
+  const rects = SPLOOT[mood].flatMap((row, y) =>
+    [...row.matchAll(/#+/g)].map(
+      (run) =>
+        `<rect x="${run.index * SPLOOT_PX_W}" y="${y * SPLOOT_PX_H}" width="${run[0].length * SPLOOT_PX_W}" height="${SPLOOT_PX_H}"/>`,
+    ),
+  );
+  if (mood === "asleep") {
+    rects.push('<text x="84" y="14" class="mono zzz">z</text>', '<text x="94" y="3" class="mono zzz">z</text>');
+  }
+  return rects.join("\n      ");
+}
+
 // ── SVG render ──────────────────────────────────────────────────────────────
 
 // 19141 → "19.1K", 1200000 → "1.2M"; below 10k keeps every digit.
@@ -310,7 +373,7 @@ function toLightTheme(svg) {
 
 // Placeholders whose value is generated markup. Every other value is
 // XML-escaped, so a string with <, & or " cannot break the SVG.
-const RAW_PLACEHOLDERS = new Set(["WEEK_BARS", "FONT_FACES"]);
+const RAW_PLACEHOLDERS = new Set(["WEEK_BARS", "FONT_FACES", "SPLOOT"]);
 
 function escapeXml(s) {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -365,6 +428,7 @@ async function main() {
   const calendar = profile.user.contributionsCollection.contributionCalendar;
   const { current, longest } = computeStreaks(calendar);
   const vacation = daysSinceLastVacation(calendar);
+  const mood = splootMood(vacation);
   const pins = profile.user.pinnedItems.nodes.filter(Boolean);
 
   const updated = new Date().toISOString().slice(0, 10);
@@ -378,11 +442,13 @@ async function main() {
     PUBLIC_REPOS: repoTotals.publicRepos,
     TOTAL_STARS: repoTotals.totalStars,
     UPDATED: updated,
+    SPLOOT_MOOD: mood,
     WEEK_BARS: renderWeekBars(calendar),
     FONT_FACES: await renderFontFaces(),
+    SPLOOT: renderSploot(mood),
   };
 
-  const { WEEK_BARS, FONT_FACES, ...stats } = values;
+  const { WEEK_BARS, FONT_FACES, SPLOOT: _sploot, ...stats } = values;
   console.log("Stats:", JSON.stringify(stats));
   console.log("Pins:", pins.map((p) => p.name).join(", "));
 
