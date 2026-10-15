@@ -41,3 +41,19 @@ camo-proxied `<img>` SVG. Upstream: cameronsjo/artificer-design-system#495.
 
 **Retire when:** Artificer ships an img-embedded SVG recipe (token hexes,
 reduced motion in `<style>`, a mini-chart pattern).
+
+## 2026-09-29 — Sploot the corgi in the stats card
+
+**Surface:** document (profile stats card, `assets/stats.template.svg`) rendered on github.com.
+
+**Pivot:** Artificer's critter, Sploot the corgi (minted on the blog and proposed
+for § Brand), joins the hero card. Its mood follows the hero stat: perky within 30
+days of a real break, ears drooping to 90, asleep beyond. The blog draws Sploot as
+quadrant block characters; camo-served SVG can't count on that font, so the same
+pixel grids become `<rect>`s here, drawn 3×6 to keep the tall-pixel proportions.
+
+| type | token/rule | what we did + why | upstream? | lane |
+|---|---|---|---|---|
+| extension | § Brand (no critter yet) | Sploot as `SPLOOT` rects in `--accent` (`#dbbb6f`, light `#7a5a10` via `LIGHT_THEME`), z's in `--fg-secondary`. Mood string in the `aria-label`. Static: the card's motion budget stays on the wordmark and bars. | yes — [artificer-design-system#524](https://github.com/cameronsjo/artificer-design-system/issues/524) | 3 |
+
+**Don't upstream:** the vacation-driven moods (a joke that belongs to this card).

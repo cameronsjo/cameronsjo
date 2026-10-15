@@ -7,7 +7,8 @@ Self-healing GitHub profile README. A weekly Action regenerates the stats card a
 - `scripts/generate-profile.mjs` (zero-dep, Node 20+) queries the GitHub GraphQL API, renders `assets/stats.svg` and its light copy `assets/stats-light.svg` from `assets/stats.template.svg` (string-substitutes `{{TOKEN}}` placeholders), and rewrites the README pins block between `<!-- PINS:START -->` / `<!-- PINS:END -->`.
 - `.github/workflows/profile.yml` runs it Mondays + on `workflow_dispatch`; commits only if something changed.
 - All stats math is local — current and longest streak, `days since last vacation` (= ≥3 consecutive zero-contribution days), contributions, repos, stars, and a weekly-contributions bar strip. No third-party widget; we own the numbers.
-- Template values are XML-escaped by `renderSvg`; only keys in `RAW_PLACEHOLDERS` are inserted as markup: `WEEK_BARS` (built from numbers) and `FONT_FACES` (base64 of the committed font files). The bar strip uses a square-root scale so quiet weeks stay visible beside a busy peak.
+- Template values are XML-escaped by `renderSvg`; only keys in `RAW_PLACEHOLDERS` are inserted as markup: `WEEK_BARS` (built from numbers), `FONT_FACES` (base64 of the committed font files), and `SPLOOT` (rects built from fixed pixel grids). The bar strip uses a square-root scale so quiet weeks stay visible beside a busy peak.
+- **Sploot**, Artificer's corgi, sits in the hero card and its mood follows the hero stat (`splootMood`): perky within 30 days of a break, drooping to 90, asleep beyond or with no break all year. Each `#` in the `SPLOOT` grids is a 3×6 rect, keeping the tall-pixel look of the blog's block-character version; the grids mirror `cameronsjo/blog` `src/lib/sploot.ts`, so change a pose there and here together. The mood is also in the card's `aria-label`.
 
 ## Gotchas
 
