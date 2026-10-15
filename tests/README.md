@@ -16,9 +16,15 @@ removed after the run. The child does not inherit production credentials or
 NODE_OPTIONS.
 
 Coverage includes the 0/30/31/90/91-day boundaries and no qualifying break,
-three distinct poses, actual raw rectangle markup, 3×6 pixel geometry,
+exact mood-to-pixel-grid mapping, three distinct poses, actual raw rectangle
+markup, 3×6 pixel geometry,
 sleeping z's, both SVG themes, XML escaping, complete placeholder substitution,
 and failure before writes when a template color has no light mapping.
 
 Production assets remain owned by the existing scheduled/manual workflow;
 these tests do not dispatch it or refresh the tracked stats cards.
+
+The profile workflow runs these commands on every push and pull request, and
+before scheduled/manual generation. Its test job has read-only permissions;
+the credentialed refresh and write steps run only for schedule/manual events
+after tests pass.

@@ -21,6 +21,40 @@ print(json.dumps({"label": root.attrib["aria-label"], "role": root.attrib["role"
   return JSON.parse(result.stdout);
 }
 
+// Independent expected artwork: pin each mood to its reviewed pixel grid.
+const EXPECTED_GRIDS = {
+  perky: [
+    "....................#...#.....",
+    "...................###.###....",
+    "...................#######....",
+    ".####################.######..",
+    "##############################",
+    "##########################....",
+    ".#######################......",
+    "...##..##..........##..##.....",
+  ],
+  drooping: [
+    "..............................",
+    "..............................",
+    "....................##..##....",
+    "...................#######....",
+    ".####################.######..",
+    "##############################",
+    "#########################.....",
+    "...##..##..........##..##.....",
+  ],
+  asleep: [
+    "..............................",
+    "..............................",
+    "....................#...#.....",
+    "...................###.###....",
+    "...########################...",
+    "..##########################..",
+    "..#########################...",
+    "############################..",
+  ],
+};
+
 const sprites = new Map();
 for (const [name, options, mood, expectedDays] of [
   ["on vacation", { days: 0 }, "perky", 0],
@@ -55,6 +89,14 @@ for (const [name, options, mood, expectedDays] of [
         assert.doesNotMatch(svg, /#dbbb6f|#c5c8c6/i, "unmapped dark sprite colors");
         assert.match(svg, /#4a3f2a/i, "secondary text needs its light color");
       }
+      const pixels = Array.from({ length: 8 }, () => Array(30).fill("."));
+      for (const rect of parsed.rects) {
+        for (let x = rect.x / 3; x < (rect.x + rect.width) / 3; x++) {
+          pixels[rect.y / 6][x] = "#";
+        }
+      }
+      assert.deepEqual(pixels.map((row) => row.join("")), EXPECTED_GRIDS[mood],
+        `${theme} ${mood} must render its specific reviewed grid`);
       const shape = JSON.stringify(parsed.rects);
       if (sprites.has(mood)) assert.equal(shape, sprites.get(mood));
       sprites.set(mood, shape);
