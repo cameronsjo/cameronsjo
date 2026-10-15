@@ -5,6 +5,7 @@ import { generateFixture } from "./fixtures/profile.mjs";
 
 // Python's standard XML parser verifies the emitted document, rather than
 // treating a regex match or successful generator exit as valid SVG.
+/** Parse emitted SVG with the standard XML parser and return its accessible label/geometry. */
 function parseSvg(svg) {
   const result = spawnSync("python3", ["-c", `
 import json, sys, xml.etree.ElementTree as ET

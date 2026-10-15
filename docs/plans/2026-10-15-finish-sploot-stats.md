@@ -36,5 +36,11 @@ variants over HTTP and as embedded images; bounding boxes stay in the hero
 card and clear both its number and label. A fresh read-only Codex review found
 no supported remaining defects.
 
-Next action: commit and deliver the feature ref and ready PR; keep the live
+CodeRabbit completed review of 28844b5 with no actionable findings or threads.
+Its documentation-coverage advisory prompted concise helper JSDoc. Syntax checks
+and all nine tests pass after that documentation round; all six generated SVGs
+are byte-identical to the visually verified artifacts. Executable JavaScript
+was independently compared with comments removed and is unchanged.
+
+Next action: deliver the documented feature ref and ready PR; keep the live
 stats refresh, merge and deployment excluded.

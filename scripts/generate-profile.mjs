@@ -265,6 +265,7 @@ const SPLOOT = {
 const SPLOOT_PX_W = 3;
 const SPLOOT_PX_H = 6;
 
+/** Choose the fixed corgi pose from the existing vacation-age statistic. */
 function splootMood(vacation) {
   if (vacation.none) return "asleep";
   if (vacation.days <= 30) return "perky";
@@ -272,7 +273,7 @@ function splootMood(vacation) {
   return "asleep";
 }
 
-// One rect per horizontal run of pixels; asleep adds two z's over the head.
+/** Render constant pixel runs as SVG rectangles; the sleeping pose adds two z's. */
 function renderSploot(mood) {
   const rects = SPLOOT[mood].flatMap((row, y) =>
     [...row.matchAll(/#+/g)].map(
@@ -379,6 +380,7 @@ function escapeXml(s) {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
+/** Substitute generated markup only for allowlisted keys; XML-escape ordinary values. */
 function renderSvg(template, values) {
   return template.replace(/\{\{(\w+)\}\}/g, (match, key) => {
     if (!(key in values)) return match; // leave unknown placeholders intact
@@ -419,6 +421,7 @@ function rewritePins(readme, pins) {
 
 // ── Main ────────────────────────────────────────────────────────────────────
 
+/** Fetch profile data and write both theme cards plus the generated pins block. */
 async function main() {
   const [profile, repoTotals] = await Promise.all([
     gql(PROFILE_QUERY, { login: LOGIN }),

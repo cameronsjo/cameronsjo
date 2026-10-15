@@ -7,6 +7,7 @@ import { spawnSync } from "node:child_process";
 const root = fileURLToPath(new URL("../../", import.meta.url));
 const loader = fileURLToPath(new URL("mock-github.mjs", import.meta.url));
 
+/** Execute the real generator in an isolated, dummy-auth fixture and return its outputs. */
 export async function generateFixture({ days = 0, noBreak = false, publicRepos = 7, transformTemplate = (text) => text } = {}) {
   const temporary = await mkdtemp(join(tmpdir(), "profile-regression-"));
   try {
@@ -37,6 +38,7 @@ export async function generateFixture({ days = 0, noBreak = false, publicRepos =
       env: { STATS_TOKEN: "offline-test-token", PROFILE_FIXTURE: fixturePath },
       encoding: "utf8", timeout: 10000,
     });
+    /** Read one fixture artifact, preserving absence when generation failed before writes. */
     async function output(name) {
       try { return await readFile(join(temporary, name), "utf8"); }
       catch (error) { if (error.code === "ENOENT") return null; throw error; }

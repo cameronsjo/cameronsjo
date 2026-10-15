@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 const fixture = JSON.parse(readFileSync(process.env.PROFILE_FIXTURE, "utf8"));
 // Replaces every fetch used by the real generator. Unexpected requests fail;
 // neither network access nor a real GitHub credential is needed.
+/** Serve only expected profile/repository GraphQL fixtures; reject other fetch requests. */
 globalThis.fetch = async (url, options) => {
   assert.equal(url, "https://api.github.com/graphql");
   assert.equal(options.headers.Authorization, "bearer offline-test-token");
